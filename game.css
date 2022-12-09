@@ -43,21 +43,24 @@
 }
 
 .enemy0 {
-  height: 30px;
-  width: 30px;
-  position: absolute;
-}
-
-.enemy1 {
-  height: 40px;
-  width: 40px;
-  position: absolute;
-}
-
-.enemy2 {
   height: 50px;
   width: 50px;
   position: absolute;
+  animation: asteroids 2s linear infinite;
+}
+
+.enemy1 {
+  height: 60px;
+  width: 60px;
+  position: absolute;
+  animation: asteroids 2s linear infinite;
+}
+
+.enemy2 {
+  height: 70px;
+  width: 70px;
+  position: absolute;
+  animation: asteroids 2s linear infinite;
 }
 
 #gameover-container {
@@ -116,5 +119,14 @@ a {
     rotate: 0deg;
     transform: translate(-100px, -100px);
     height: 180px;
+  }
+}
+
+@keyframes asteroids {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: 360deg;
   }
 }

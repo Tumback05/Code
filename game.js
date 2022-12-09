@@ -4,6 +4,8 @@ var scoretxt = document.querySelector("#score");
 var gameoverContainer = document.querySelector("#gameover-container");
 var gameoverSub = document.querySelector("#gameover-sub");
 var spawnProtection = document.querySelector("#spawnprotection");
+var backgroundMusic = new Audio("sounds/background.mp3");
+var explosion = new Audio("sounds/explosion.wav");
 var winx = window.innerWidth / 2;
 var winy = window.innerHeight / 2;
 var timer = new Timer(120);
@@ -13,10 +15,11 @@ var isRunning = true;
 
 player.style.left = winx + "px";
 player.style.top = winy + "px";
+backgroundMusic.play();
 
 function spawnEnemy() {
   var enemy = document.createElement("img");
-  enemy.setAttribute("src", "img/" + rand(3) + ".jpg");
+  enemy.setAttribute("src", "img/" + rand(3) + ".png");
   enemy.setAttribute("class", "enemy" + rand(3));
   canvas.appendChild(enemy);
 
