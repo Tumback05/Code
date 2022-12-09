@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <title>Document</title>
+    <link rel="stylesheet" href="game.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body id="body">
+    <p id="score">Your Score: </p>
+    <div id="gameover-container">
+        <h1 id="gameover-title">You lost!</h1>
+        <h2 id="gameover-sub"></h2>
+        <a onclick="window.location.reload()">Try again</a>
+        <a href="index.html">Title screen</a>
+    </div>
+    <div id="playground">
+        <img id="player" src="img/astronaut.png"></img>
+        <div id="spawnprotection"></div>
+    </div>
+    <script src="https://jsgame.bbz.cloud/scripts/v1/geometry.js"></script>
+    <script src="https://jsgame.bbz.cloud/scripts/v1/timer.js"></script>
+    <script src="https://jsgame.bbz.cloud/scripts/v1/collision.js"></script>
+    <script src="game.js"></script>
+</body>
+
+</html>

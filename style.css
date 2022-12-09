@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "monocraft";
+  color: #fff;
+}
+
+body {
+  background-color: rgb(26, 26, 26);
+}
+
+#container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-size: 52px;
+  margin-bottom: 50px;
+}
+
+#buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  display: inline-block;
+  font-size: 20px;
+  padding: 5px 20px;
+  margin-bottom: 20px;
+  background: none;
+  border: #fff solid 3px;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
