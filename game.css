@@ -47,6 +47,7 @@
   width: 50px;
   position: absolute;
   animation: asteroids 2s linear infinite;
+  cursor: pointer;
 }
 
 .enemy1 {
@@ -54,6 +55,7 @@
   width: 60px;
   position: absolute;
   animation: asteroids 2s linear infinite;
+  cursor: pointer;
 }
 
 .enemy2 {
@@ -61,6 +63,7 @@
   width: 70px;
   position: absolute;
   animation: asteroids 2s linear infinite;
+  cursor: pointer;
 }
 
 .explosion-animation {

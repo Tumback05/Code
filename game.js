@@ -5,7 +5,8 @@ var gameoverContainer = document.querySelector("#gameover-container");
 var gameoverSub = document.querySelector("#gameover-sub");
 var spawnProtection = document.querySelector("#spawnprotection");
 var backgroundMusic = new Audio("sounds/background.mp3");
-var explosionSound = new Audio("sounds/explosion.wav");
+var deathSound = new Audio("sounds/death.wav");
+var destroySound = new Audio("sounds/destroy.wav");
 var explosionAnim = document.createElement("img");
 var winx = window.innerWidth / 2; // X Koordinaten von der Mitte des Bildschirms
 var winy = window.innerHeight / 2; // Y Koordinaten von der Mitte des Bildschirms
@@ -17,6 +18,9 @@ var isRunning = true;
 player.style.left = winx + "px";
 player.style.top = winy + "px";
 backgroundMusic.play();
+backgroundMusic.volume = 0.2;
+deathSound.volume = 0.4;
+destroySound.volume = 0.4;
 
 function spawnEnemy() {
   var enemy = document.createElement("img");
@@ -32,7 +36,7 @@ function spawnEnemy() {
     score++;
     scoretxt.innerHTML = "Your Score: " + score;
     canvas.removeChild(enemy);
-    handleExplosionAnimation(enemy);
+    handleExplosion(enemy);
   });
 }
 
@@ -53,7 +57,8 @@ function checkSpawnpos(enemy) {
   }
 }
 
-function handleExplosionAnimation(enemy) {
+function handleExplosion(enemy) {
+  destroySound.play();
   explosionAnim.setAttribute("src", "img/explosion.gif");
   explosionAnim.classList.add("explosion-animation");
   explosionAnim.style.left = enemy.style.left;
@@ -96,7 +101,7 @@ function checkCollision() {
   // Erstellt eine Liste mit allen Objekten die das Wort: enemy in der Class haben
   const enemies = document.querySelectorAll('[class^="enemy"]');
   if (anyCollision(player, enemies)) {
-    explosionSound.play();
+    deathSound.play();
     canvas.innerHTML = " ";
     isRunning = false;
     scoretxt.style.display = "none";
