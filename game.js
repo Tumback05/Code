@@ -5,9 +5,10 @@ var gameoverContainer = document.querySelector("#gameover-container");
 var gameoverSub = document.querySelector("#gameover-sub");
 var spawnProtection = document.querySelector("#spawnprotection");
 var backgroundMusic = new Audio("sounds/background.mp3");
-var explosion = new Audio("sounds/explosion.wav");
-var winx = window.innerWidth / 2;
-var winy = window.innerHeight / 2;
+var explosionSound = new Audio("sounds/explosion.wav");
+var explosionAnim = document.createElement("img");
+var winx = window.innerWidth / 2; // X Koordinaten von der Mitte des Bildschirms
+var winy = window.innerHeight / 2; // Y Koordinaten von der Mitte des Bildschirms
 var timer = new Timer(120);
 var score = 0;
 var speed = 80;
@@ -20,7 +21,7 @@ backgroundMusic.play();
 function spawnEnemy() {
   var enemy = document.createElement("img");
   enemy.setAttribute("src", "img/" + rand(3) + ".png");
-  enemy.setAttribute("class", "enemy" + rand(3));
+  enemy.classList.add("enemy" + rand(3));
   canvas.appendChild(enemy);
 
   enemy.style.left = rand(winx * 2) - 10 + "px";
@@ -30,36 +31,54 @@ function spawnEnemy() {
   enemy.addEventListener("click", function destroyEnemy() {
     score++;
     scoretxt.innerHTML = "Your Score: " + score;
-    enemy.parentNode.removeChild(enemy);
+    canvas.removeChild(enemy);
+    handleExplosionAnimation(enemy);
   });
 }
 
 function checkSpawnpos(enemy) {
+  // Erstellt eine Boundingbox um das Objekt. Koordinaten können mit top, bottom, left und right abgerufen werden
   const protectionRect = spawnProtection.getBoundingClientRect();
   const enemyRect = enemy.getBoundingClientRect();
   if (
+    // Überprüft, ob der Gegner in der Protectionzone gespawn wird
     enemyRect.top > protectionRect.top &&
     enemyRect.bottom < protectionRect.bottom &&
     enemyRect.left > protectionRect.left &&
     enemyRect.right < protectionRect.right
   ) {
+    // Wenn ja zerstören und direkt einen neuen Gegner spawnen
     enemy.parentNode.removeChild(enemy);
     spawnEnemy();
   }
 }
 
+function handleExplosionAnimation(enemy) {
+  explosionAnim.setAttribute("src", "img/explosion.gif");
+  explosionAnim.classList.add("explosion-animation");
+  explosionAnim.style.left = enemy.style.left;
+  explosionAnim.style.top = enemy.style.top;
+  explosionAnim.style.height = "100px";
+  canvas.appendChild(explosionAnim);
+  setTimeout(function () {
+    // Sobald die Animation fertig ist (600ms) wird sie wieder zerstört
+    canvas.removeChild(explosionAnim);
+  }, 600);
+}
+
 function moveEnemy() {
+  // Erstellt eine Liste mit allen Objekten die das Wort: enemy in der Class haben
   const enemies = document.querySelectorAll('[class^="enemy"]');
   for (let enemy of enemies) {
-    const rad = angleDeg(
+    const deg = angleDeg(
       parseInt(winx),
       parseInt(winy),
       parseInt(enemy.style.left),
       parseInt(enemy.style.top)
     );
     var distance = getDistance(enemy);
-    var gegenkathete = (Math.sin(rad) * distance) / speed;
-    var ankathete = (Math.cos(rad) * distance) / speed;
+    var gegenkathete = (Math.sin(deg) * distance) / speed;
+    var ankathete = (Math.cos(deg) * distance) / speed;
     enemy.style.left = parseInt(enemy.style.left) + ankathete + "px";
     enemy.style.top = parseInt(enemy.style.top) - gegenkathete + "px";
   }
@@ -68,13 +87,16 @@ function moveEnemy() {
 function getDistance(enemy) {
   var enemyx = parseInt(enemy.style.left);
   var enemyy = parseInt(enemy.style.top);
+  // Die Distanz zwischen Gegner und Spieler berechnen
+  // √[(x₂ - x₁)² + (y₂ - y₁)²]
   return Math.sqrt((enemyx - winx) ** 2 + (enemyy - winy) ** 2);
-  //√[(x₂ - x₁)² + (y₂ - y₁)²]
 }
 
 function checkCollision() {
+  // Erstellt eine Liste mit allen Objekten die das Wort: enemy in der Class haben
   const enemies = document.querySelectorAll('[class^="enemy"]');
   if (anyCollision(player, enemies)) {
+    explosionSound.play();
     canvas.innerHTML = " ";
     isRunning = false;
     scoretxt.style.display = "none";
@@ -84,6 +106,7 @@ function checkCollision() {
 }
 
 function rand(amount) {
+  // Generiert eine Zufallszahl
   return Math.floor(Math.random() * amount);
 }
 

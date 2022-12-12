@@ -63,6 +63,10 @@
   animation: asteroids 2s linear infinite;
 }
 
+.explosion-animation {
+  position: absolute;
+}
+
 #gameover-container {
   display: none;
   position: absolute;

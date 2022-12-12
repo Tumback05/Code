@@ -40,3 +40,19 @@ a {
   text-decoration: none;
   text-align: center;
 }
+
+#save-him,
+#click-to-destroy {
+  position: absolute;
+  width: 250px;
+  margin: 0 80px 80px 80px;
+}
+
+#save-him {
+  bottom: 0;
+}
+
+#click-to-destroy {
+  bottom: 0;
+  right: 0;
+}
