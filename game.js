@@ -7,7 +7,6 @@ var spawnProtection = document.querySelector("#spawnprotection");
 var backgroundMusic = new Audio("sounds/background.mp3");
 var deathSound = new Audio("sounds/death.wav");
 var destroySound = new Audio("sounds/destroy.wav");
-var explosionAnim = document.createElement("img");
 var winx = window.innerWidth / 2; // X Koordinaten von der Mitte des Bildschirms
 var winy = window.innerHeight / 2; // Y Koordinaten von der Mitte des Bildschirms
 var timer = new Timer(120);
@@ -18,7 +17,7 @@ var isRunning = true;
 player.style.left = winx + "px";
 player.style.top = winy + "px";
 backgroundMusic.play();
-backgroundMusic.volume = 0.2;
+backgroundMusic.volume = 0.3;
 deathSound.volume = 0.4;
 destroySound.volume = 0.4;
 
@@ -58,12 +57,13 @@ function checkSpawnpos(enemy) {
 }
 
 function handleExplosion(enemy) {
+  var explosionAnim = document.createElement("img");
   destroySound.play();
   explosionAnim.setAttribute("src", "img/explosion.gif");
   explosionAnim.classList.add("explosion-animation");
   explosionAnim.style.left = enemy.style.left;
   explosionAnim.style.top = enemy.style.top;
-  explosionAnim.style.height = "100px";
+  explosionAnim.style.height = "80px";
   canvas.appendChild(explosionAnim);
   setTimeout(function () {
     // Sobald die Animation fertig ist (600ms) wird sie wieder zerstört
