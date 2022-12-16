@@ -1,18 +1,18 @@
-var canvas = document.querySelector("#playground");
-var player = document.querySelector("#player");
-var scoretxt = document.querySelector("#score");
-var gameoverContainer = document.querySelector("#gameover-container");
-var gameoverSub = document.querySelector("#gameover-sub");
-var spawnProtection = document.querySelector("#spawnprotection");
-var backgroundMusic = new Audio("sounds/background.mp3");
-var deathSound = new Audio("sounds/death.wav");
-var destroySound = new Audio("sounds/destroy.wav");
-var winx = window.innerWidth / 2; // X Koordinaten von der Mitte des Bildschirms
-var winy = window.innerHeight / 2; // Y Koordinaten von der Mitte des Bildschirms
-var timer = new Timer(120);
-var score = 0;
-var speed = 80;
-var isRunning = true;
+const canvas = document.querySelector("#playground");
+const player = document.querySelector("#player");
+const scoretxt = document.querySelector("#score");
+const gameoverContainer = document.querySelector("#gameover-container");
+const gameoverSubtitle = document.querySelector("#gameover-sub");
+const spawnProtection = document.querySelector("#spawnprotection");
+const backgroundMusic = new Audio("sounds/background.mp3");
+const deathSound = new Audio("sounds/death.wav");
+const destroySound = new Audio("sounds/destroy.wav");
+const winx = window.innerWidth / 2; // X Koordinaten von der Mitte des Bildschirms
+const winy = window.innerHeight / 2; // Y Koordinaten von der Mitte des Bildschirms
+let timer = new Timer(120);
+let speed = 80;
+let score = 0;
+let isRunning = true;
 
 player.style.left = winx + "px";
 player.style.top = winy + "px";
@@ -22,7 +22,7 @@ deathSound.volume = 0.4;
 destroySound.volume = 0.4;
 
 function spawnEnemy() {
-  var enemy = document.createElement("img");
+  let enemy = document.createElement("img");
   enemy.setAttribute("src", "img/" + rand(3) + ".png");
   enemy.classList.add("enemy" + rand(3));
   canvas.appendChild(enemy);
@@ -57,7 +57,7 @@ function checkSpawnpos(enemy) {
 }
 
 function handleExplosion(enemy) {
-  var explosionAnim = document.createElement("img");
+  const explosionAnim = document.createElement("img");
   destroySound.play();
   explosionAnim.setAttribute("src", "img/explosion.gif");
   explosionAnim.classList.add("explosion-animation");
@@ -81,17 +81,17 @@ function moveEnemy() {
       parseInt(enemy.style.left),
       parseInt(enemy.style.top)
     );
-    var distance = getDistance(enemy);
-    var gegenkathete = (Math.sin(deg) * distance) / speed;
-    var ankathete = (Math.cos(deg) * distance) / speed;
+    let distance = getDistance(enemy);
+    let gegenkathete = (Math.sin(deg) * distance) / speed;
+    let ankathete = (Math.cos(deg) * distance) / speed;
     enemy.style.left = parseInt(enemy.style.left) + ankathete + "px";
     enemy.style.top = parseInt(enemy.style.top) - gegenkathete + "px";
   }
 }
 
 function getDistance(enemy) {
-  var enemyx = parseInt(enemy.style.left);
-  var enemyy = parseInt(enemy.style.top);
+  let enemyx = parseInt(enemy.style.left);
+  let enemyy = parseInt(enemy.style.top);
   // Die Distanz zwischen Gegner und Spieler berechnen
   // √[(x₂ - x₁)² + (y₂ - y₁)²]
   return Math.sqrt((enemyx - winx) ** 2 + (enemyy - winy) ** 2);
@@ -106,7 +106,7 @@ function checkCollision() {
     isRunning = false;
     scoretxt.style.display = "none";
     gameoverContainer.style.display = "flex";
-    gameoverSub.innerHTML = "Your score was: " + score;
+    gameoverSubtitle.innerHTML = "Your score was: " + score;
   }
 }
 
@@ -126,7 +126,6 @@ function loop() {
   } else if (score >= 20) {
     timer = 90;
   }
-  console.log(timer);
   window.requestAnimationFrame(loop);
 }
 window.requestAnimationFrame(loop);
